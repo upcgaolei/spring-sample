@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.xiaozhong.dao.UserAddressRepository">
+    <resultMap id="BaseResultMap" type="com.github.xiaozhong.entity.UserAddress">
+        <id column="user_id" property="userId"/>
+        <result column="user_address" property="userAddress"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id, user_address
+    </sql>
+
+    <insert id="insert" parameterType="UserAddress">
+        insert into user_address_table (user_id, user_address)
+        values (#{userId}, #{userAddress})
+    </insert>
+
+</mapper>
