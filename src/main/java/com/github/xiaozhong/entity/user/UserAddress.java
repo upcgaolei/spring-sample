@@ -1,4 +1,4 @@
-package com.github.xiaozhong.entity;
+package com.github.xiaozhong.entity.user;
 
 /**
  * @author zhougaolei

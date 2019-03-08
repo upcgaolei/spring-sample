@@ -2,6 +2,7 @@ package com.github.xiaozhong.component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiaozhong.dto.UserRichInfo;
+import com.github.xiaozhong.manager.OrderManager;
 import com.github.xiaozhong.manager.UserManager;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +18,14 @@ public class MyComponent {
     @Resource
     private UserManager userManager;
 
+    @Resource
+    private OrderManager orderManager;
+
     public void dealMessage(String message) {
         UserRichInfo userRichInfo = JSONObject.parseObject(message, UserRichInfo.class);
         userManager.createUserInfo(userRichInfo);
+
+        orderManager.createOrderInfo();
     }
 
 }

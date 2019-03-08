@@ -34,22 +34,30 @@ public class Consumer {
     private MyComponent myComponent;
 
     private void start() throws Exception {
-        ContainerProperties containerProps = new ContainerProperties(topic);
-        containerProps.setMessageListener(new MessageListener<Integer, String>() {
-            @Override
-            public void onMessage(ConsumerRecord<Integer, String> message) {
-                logger.info("received: " + message);
-                myComponent.dealMessage(message.value());
-            }
-        });
-        container = createContainer(containerProps);
-        container.start();
-        logger.info(this.getClass().getName() + "- - - initializing bean");
+        try {
+            ContainerProperties containerProps = new ContainerProperties(topic);
+            containerProps.setMessageListener(new MessageListener<Integer, String>() {
+                @Override
+                public void onMessage(ConsumerRecord<Integer, String> message) {
+                    logger.info("received: " + message);
+                    myComponent.dealMessage(message.value());
+                }
+            });
+            container = createContainer(containerProps);
+            container.start();
+            logger.info(this.getClass().getName() + "- - - initializing bean");
+        } catch (Exception e) {
+            logger.error("consume message error", e);
+        }
     }
 
     private void close() throws Exception {
-        container.stop();
-        logger.info(this.getClass().getName() + "- - - destroying bean");
+        try {
+            container.stop();
+            logger.info(this.getClass().getName() + "- - - destroying bean");
+        } catch (Exception e) {
+            logger.error("consumer close error", e);
+        }
     }
 
     public String getTopic() {

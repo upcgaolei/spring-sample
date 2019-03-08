@@ -9,6 +9,6 @@
     <bean class="com.github.xiaozhong.component.InstantiationTracingBeanPostProcessor"/>
     <bean class="com.github.xiaozhong.component.LogComponent" init-method="init" destroy-method="destroy"/>
 
-    <context:property-placeholder location="classpath:properties/database.properties" />
+    <context:property-placeholder location="classpath:properties/database_user.properties,classpath:properties/database_order.properties" />
 
 </beans>

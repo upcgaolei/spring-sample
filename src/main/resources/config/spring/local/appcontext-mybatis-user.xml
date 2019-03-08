@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--数据源配置-->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="userDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!--驱动-->
         <property name="driverClassName" value="${db.driver}"/>
         <!-- 数据库地址 -->
@@ -32,22 +32,21 @@
         <property name="testOnReturn" value="${db.testOnReturn}"/>
     </bean>
 
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
-        <property name="typeAliasesPackage" value="com.github.xiaozhong.entity"/>
+    <bean id="userSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="userDataSource"/>
+        <property name="mapperLocations" value="classpath:mapper/user/*.xml"/>
+        <property name="typeAliasesPackage" value="com.github.xiaozhong.entity.user"/>
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.github.xiaozhong.dao"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    <bean id="userScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.github.xiaozhong.dao.user"/>
+        <property name="sqlSessionFactoryBeanName" value="userSqlSessionFactory"/>
     </bean>
 
-    <bean id="transactionManager" class="com.github.xiaozhong.extend.ExtendDataSourceTransactionManager" init-method="init" destroy-method="destroy">
-        <property name="dataSource" ref="dataSource"/>
-        <qualifier value="transactionManager"/>
+    <bean id="userTransactionManager" class="com.github.xiaozhong.extend.ExtendDataSourceTransactionManager" init-method="init" destroy-method="destroy">
+        <property name="dataSource" ref="userDataSource"/>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="userTransactionManager"/>
 
 </beans>

@@ -1,10 +1,10 @@
 package com.github.xiaozhong.manager;
 
-import com.github.xiaozhong.dao.UserAddressRepository;
-import com.github.xiaozhong.dao.UserRepository;
+import com.github.xiaozhong.dao.user.UserAddressRepository;
+import com.github.xiaozhong.dao.user.UserRepository;
 import com.github.xiaozhong.dto.UserRichInfo;
-import com.github.xiaozhong.entity.User;
-import com.github.xiaozhong.entity.UserAddress;
+import com.github.xiaozhong.entity.user.User;
+import com.github.xiaozhong.entity.user.UserAddress;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ public class UserManager {
     @Resource
     private UserAddressRepository userAddressRepository;
 
-    @Transactional(rollbackFor = Exception.class, value = "transactionManager")
+    @Transactional(rollbackFor = Exception.class, value = "userTransactionManager")
     public boolean createUserInfo(UserRichInfo userRichInfo) {
         User user = userRichInfo.buildUser();
         userRepository.insert(user);

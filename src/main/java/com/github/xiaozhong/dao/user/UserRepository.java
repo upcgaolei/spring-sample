@@ -1,6 +1,6 @@
-package com.github.xiaozhong.dao;
+package com.github.xiaozhong.dao.user;
 
-import com.github.xiaozhong.entity.User;
+import com.github.xiaozhong.entity.user.User;
 
 /**
  * @author zhougaolei
