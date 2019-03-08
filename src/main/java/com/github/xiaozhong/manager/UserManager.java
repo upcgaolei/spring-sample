@@ -3,9 +3,15 @@ package com.github.xiaozhong.manager;
 import com.github.xiaozhong.dao.UserAddressRepository;
 import com.github.xiaozhong.dao.UserRepository;
 import com.github.xiaozhong.dto.UserRichInfo;
+import com.github.xiaozhong.entity.User;
+import com.github.xiaozhong.entity.UserAddress;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 /**
@@ -15,6 +21,8 @@ import javax.annotation.Resource;
 @Component
 public class UserManager {
 
+    private static final Log logger = LogFactory.getLog(UserManager.class);
+
     @Resource
     private UserRepository userRepository;
 
@@ -23,11 +31,22 @@ public class UserManager {
 
     @Transactional(rollbackFor = Exception.class, value = "transactionManager")
     public boolean createUserInfo(UserRichInfo userRichInfo) {
-//        int userId = userRepository.insert(userRichInfo.buildUser());
-//        UserAddress userAddress = userRichInfo.buildUserAddress();
-//        userAddress.setUserId((long) userId);
-//        userAddressRepository.insert(userAddress);
+        User user = userRichInfo.buildUser();
+        userRepository.insert(user);
+        UserAddress userAddress = userRichInfo.buildUserAddress();
+        userAddress.setUserId(user.getId());
+        userAddressRepository.insert(userAddress);
         return true;
+    }
+
+    @PostConstruct
+    private void init() {
+        logger.info(this.getClass().getName() + "- - - initializing bean");
+    }
+
+    @PreDestroy
+    public void destroy() {
+        logger.info(this.getClass().getName() + "- - - destroying bean");
     }
 
 }

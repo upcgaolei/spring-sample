@@ -48,7 +48,7 @@ public class UserRichInfo {
 
     public UserAddress buildUserAddress() {
         UserAddress userAddress = new UserAddress();
-        userAddress.setAddressDesc(this.userAddress);
+        userAddress.setUserAddress(this.userAddress);
         return userAddress;
     }
 

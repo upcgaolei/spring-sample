@@ -6,6 +6,8 @@
      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <context:component-scan base-package="com.github.xiaozhong"/>
+    <bean class="com.github.xiaozhong.component.InstantiationTracingBeanPostProcessor"/>
+    <bean class="com.github.xiaozhong.component.LogComponent" init-method="init" destroy-method="destroy"/>
 
     <context:property-placeholder location="classpath:properties/database.properties" />
 

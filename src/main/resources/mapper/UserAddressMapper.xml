@@ -11,7 +11,7 @@
     </sql>
 
     <insert id="insert" parameterType="UserAddress">
-        insert into user_address_table (user_id, user_address)
+        insert into test_user_address (user_id, user_address)
         values (#{userId}, #{userAddress})
     </insert>
 

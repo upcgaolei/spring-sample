@@ -8,7 +8,7 @@ public class UserAddress {
 
     private Long userId;
 
-    private String addressDesc;
+    private String userAddress;
 
     public Long getUserId() {
         return userId;
@@ -18,19 +18,19 @@ public class UserAddress {
         this.userId = userId;
     }
 
-    public String getAddressDesc() {
-        return addressDesc;
+    public String getUserAddress() {
+        return userAddress;
     }
 
-    public void setAddressDesc(String addressDesc) {
-        this.addressDesc = addressDesc;
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
     }
 
     @Override
     public String toString() {
         return "UserAddress{" +
                 "userId=" + userId +
-                ", addressDesc='" + addressDesc + '\'' +
+                ", userAddress='" + userAddress + '\'' +
                 '}';
     }
 }

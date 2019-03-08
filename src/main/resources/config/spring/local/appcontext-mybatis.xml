@@ -43,7 +43,7 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager" class="com.github.xiaozhong.extend.ExtendDataSourceTransactionManager" init-method="init" destroy-method="destroy">
         <property name="dataSource" ref="dataSource"/>
         <qualifier value="transactionManager"/>
     </bean>

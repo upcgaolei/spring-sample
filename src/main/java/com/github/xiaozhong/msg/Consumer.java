@@ -44,12 +44,12 @@ public class Consumer {
         });
         container = createContainer(containerProps);
         container.start();
-        logger.info("consumer start");
+        logger.info(this.getClass().getName() + "- - - initializing bean");
     }
 
     private void close() throws Exception {
         container.stop();
-        logger.info("consumer stop");
+        logger.info(this.getClass().getName() + "- - - destroying bean");
     }
 
     public String getTopic() {
