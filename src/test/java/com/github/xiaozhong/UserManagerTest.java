@@ -27,7 +27,7 @@ public class UserManagerTest extends AbstractTest {
     }
 
     @Test
-    public void createUserInfoTest() {
+    public void createUserInfoTest() throws Exception {
         userManager.createUserInfo(userRichInfo);
     }
 

@@ -8,9 +8,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListener;
+import org.springframework.kafka.listener.config.ContainerProperties;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -33,14 +33,17 @@ public class Consumer {
     @Resource
     private MyComponent myComponent;
 
-    private void start() throws Exception {
+    private long i = 1;
+
+    private void start() {
         try {
             ContainerProperties containerProps = new ContainerProperties(topic);
             containerProps.setMessageListener(new MessageListener<Integer, String>() {
                 @Override
                 public void onMessage(ConsumerRecord<Integer, String> message) {
-                    logger.info("received: " + message);
-                    myComponent.dealMessage(message.value());
+                    logger.info("received: " + message + ", " + i);
+                    myComponent.dealMessage(message.value(), i);
+                    i++;
                 }
             });
             container = createContainer(containerProps);

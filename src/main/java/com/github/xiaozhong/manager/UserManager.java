@@ -30,7 +30,7 @@ public class UserManager {
     private UserAddressRepository userAddressRepository;
 
     @Transactional(rollbackFor = Exception.class, value = "userTransactionManager")
-    public boolean createUserInfo(UserRichInfo userRichInfo) {
+    public boolean createUserInfo(UserRichInfo userRichInfo) throws Exception {
         User user = userRichInfo.buildUser();
         userRepository.insert(user);
         UserAddress userAddress = userRichInfo.buildUserAddress();

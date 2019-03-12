@@ -11,9 +11,9 @@
         id, user_name, user_phone
     </sql>
 
-    <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
-        insert into test_user_info (user_name, user_phone)
-        values (#{userName}, #{userPhone})
+    <insert id="insert" parameterType="User">
+        insert into test_user_info (id, user_name, user_phone)
+        values (#{id}, #{userName}, #{userPhone})
     </insert>
 
 </mapper>

@@ -9,11 +9,21 @@ import com.github.xiaozhong.entity.user.UserAddress;
  */
 public class UserRichInfo {
 
+    private long userId;
+
     private String userName;
 
     private String userPhone;
 
     private String userAddress;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public String getUserName() {
         return userName;
@@ -41,6 +51,7 @@ public class UserRichInfo {
 
     public User buildUser() {
         User user = new User();
+        user.setId(this.getUserId());
         user.setUserName(this.userName);
         user.setUserPhone(this.userPhone);
         return user;
@@ -48,6 +59,7 @@ public class UserRichInfo {
 
     public UserAddress buildUserAddress() {
         UserAddress userAddress = new UserAddress();
+        userAddress.setUserId(this.getUserId());
         userAddress.setUserAddress(this.userAddress);
         return userAddress;
     }
@@ -55,7 +67,8 @@ public class UserRichInfo {
     @Override
     public String toString() {
         return "UserRichInfo{" +
-                "userName='" + userName + '\'' +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
                 ", userPhone='" + userPhone + '\'' +
                 ", userAddress='" + userAddress + '\'' +
                 '}';
