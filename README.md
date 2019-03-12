@@ -1,6 +1,8 @@
 # spring-sample
+* Producer: https://github.com/upcgaolei/spring-sample
+* Consumer: https://github.com/upcgaolei/spring-boot-sample
 
-#### Environment
+#### 1、Environment
 ```
 Apache Maven 3.5.0
 JDK 1.8
@@ -11,31 +13,56 @@ apache-tomcat-7.0.78
 kafka_2.11-0.11.0.0
 ```
 
-#### Prepare MySQL
-- [ ] localhost start MySQL Server, set username `root`, set password `123456`
+#### 2、Prepare MySQL
+* 2.1 localhost start MySQL Server, set username `root`, set password `123456`
+* 2.2 create two database `test` and `dimension`
+* 2.3 create table `test_user_info` and `test_user_address` in `test` database
+* 2.4 create table `test_order_info` in `dimension` database
 
-#### Prepare Kafka
-- [ ] Download the 2.1.0 release and un-tar it, execute `tar -xzf kafka_2.11-2.1.0.tgz`
-- [ ] start zookeeper server, `bin/zookeeper-server-start.sh config/zookeeper.properties`
-- [ ] start kafka server, `bin/kafka-server-start.sh config/server.properties`
-- [ ] create topic, `bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic_test`
-- [ ] send messages, `bin/kafka-console-producer.sh --broker-list localhost:9092 --topic topic_test`
+schema
+```sql
+CREATE TABLE `test_user_info` (
+  `id` int(11) DEFAULT NULL,
+  `user_name` varchar(64) NOT NULL DEFAULT '' COMMENT 'user name',
+  `user_phone` varchar(512) DEFAULT '' COMMENT 'user phone'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+```sql
+CREATE TABLE `test_user_address` (
+  `user_id` int(11) NOT NULL COMMENT 'user id',
+  `user_address` varchar(64) NOT NULL DEFAULT '' COMMENT 'user address'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+```sql
+CREATE TABLE `test_order_info` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `price` int(11) DEFAULT NULL COMMENT 'price',
+  `order_desc` varchar(64) DEFAULT NULL COMMENT 'order desc',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+
+#### 3、Prepare Kafka
+* 3.1 Download the 2.1.0 release and un-tar it, execute `tar -xzf kafka_2.11-2.1.0.tgz`
+* 3.2 start zookeeper server, `bin/zookeeper-server-start.sh config/zookeeper.properties`
+* 3.3 start kafka server, `bin/kafka-server-start.sh config/server.properties`
+* 3.4 create topic, `bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic_test`
+* 3.5 send messages, `bin/kafka-console-producer.sh --broker-list localhost:9092 --topic topic_test`
 
 
-#### How to start this project
+#### 4、How to start this project
+* 4.1 execute `mvn clean install -DskipTests`
+* 4.2 copy `target/spring-sample-1.0-SNAPSHOT.jar` to `${home}/apache-tomcat-7.0.78/webapps`
+* 4.3 `cd ${home}/apache-tomcat-7.0.78/bin` then execute `sh start.sh`
+* 4.4 `cd ${home}/apache-tomcat-7.0.78/logs` then `tail -200f catelina.out`
 
-- [ ] execute `mvn clean install -DskipTests`
-- [ ] copy `target/spring-sample-1.0-SNAPSHOT.jar` to `${home}/apache-tomcat-7.0.78/webapps`
-- [ ] `cd ${home}/apache-tomcat-7.0.78/bin` then execute `sh start.sh`
-- [ ] `cd ${home}/apache-tomcat-7.0.78/logs` then `tail -200f catelina.out`
+#### 5、Produce more messages
 
-#### Produce more messages
+* 5.1 `cd spring-boot-sample`, run com.github.xiaozhong.SpringBootSampleApplication#main
 
-- [ ] `cd spring-boot-sample`, run com.github.xiaozhong.SpringBootSampleApplication#main
+#### 6、Stop Consumer, Restore problem scenario.
 
-#### Stop Consumer, Restore problem scenario.
-
-- [ ] `cd ${home}/apache-tomcat-7.0.78/bin` then execute `sh shutdown.sh`, then we will find the following stack trace
+* 6.1 `cd ${home}/apache-tomcat-7.0.78/bin` then execute `sh shutdown.sh`, then we will find the following stack trace
 
 ```
 信息: received: ConsumerRecord(topic = topic_test, partition = 0, offset = 618243, CreateTime = 1552358060833, serialized key size = -1, serialized value size = 76, headers = RecordHeaders(headers = [], isReadOnly = false), key = null, value = {"userAddress":"china, shanghai","userName":"my name","userPhone":"1234567"}), 3849
