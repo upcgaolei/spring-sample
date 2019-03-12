@@ -1,6 +1,6 @@
 # spring-sample
-* Producer: https://github.com/upcgaolei/spring-sample
-* Consumer: https://github.com/upcgaolei/spring-boot-sample
+* Producer Repo: [Producer](https://github.com/upcgaolei/spring-sample)
+* Consumer Repo: [Consumer](https://github.com/upcgaolei/spring-boot-sample)
 
 #### 1、Environment
 ```
